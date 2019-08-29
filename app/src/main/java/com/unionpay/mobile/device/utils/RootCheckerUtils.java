@@ -1,14 +1,12 @@
 package com.unionpay.mobile.device.utils;
 
-import android.content.Context;
-import android.content.pm.PackageManager;
-
-import com.jrummyapps.android.shell.Shell;
-
-import java.io.File;
+import android.content.*;
+import android.content.pm.*;
+import com.jrummyapps.android.shell.*;
+import java.io.*;
 
 /**
- * @author 云闪付开发者
+ * @author 云闪付
  */
 public class RootCheckerUtils {
     public static final String[] KNOWN_DANGEROUS_APPS_PACKAGES;

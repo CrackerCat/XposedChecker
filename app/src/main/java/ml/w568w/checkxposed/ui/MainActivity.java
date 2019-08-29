@@ -44,15 +44,15 @@ import ml.w568w.checkxposed.util.AlipayDonate;
  */
 public class MainActivity extends AppCompatActivity {
     private static final String[] CHECK_ITEM = {
-            "载入Xposed工具类",
-            "寻找特征动态链接库",
-            "代码堆栈寻找调起者",
-            "检测Xposed安装情况",
-            "判定系统方法调用钩子",
-            "检测虚拟Xposed环境",
-            "寻找Xposed运行库文件",
-            "内核查找Xposed链接库",
-            "环境变量特征字判断",
+		"载入Xposed工具类",
+		"寻找特征动态链接库",
+		"代码堆栈寻找调起者",
+		"检测Xposed安装情况",
+		"判定系统方法调用钩子",
+		"检测虚拟Xposed环境",
+		"寻找Xposed运行库文件",
+		"内核查找Xposed链接库",
+		"环境变量特征字判断",
     };
     private static final String[] ROOT_STATUS = {"出错", "未发现Root", "发现Root"};
 
@@ -71,7 +71,8 @@ public class MainActivity extends AppCompatActivity {
             futureTask = new FutureTask<>(new CheckThread());
             new Thread(futureTask).start();
             futureTask.get();
-        } catch (Exception e) {
+        }
+		catch (Exception e) {
             e.printStackTrace();
         }
         setContentView(R.layout.activity_main);
@@ -90,39 +91,39 @@ public class MainActivity extends AppCompatActivity {
 
         if (listView != null) {
             listView.setAdapter(new BaseAdapter() {
-                @Override
-                public int getCount() {
-                    return CHECK_ITEM.length + 1;
-                }
+					@Override
+					public int getCount() {
+						return CHECK_ITEM.length + 1;
+					}
 
-                @Override
-                public Object getItem(int position) {
-                    return position;
-                }
+					@Override
+					public Object getItem(int position) {
+						return position;
+					}
 
-                @Override
-                public long getItemId(int position) {
-                    return position;
-                }
+					@Override
+					public long getItemId(int position) {
+						return position;
+					}
 
-                @Override
-                public View getView(int position, View convertView, ViewGroup parent) {
-                    RelativeLayout layout = (RelativeLayout) LayoutInflater.from(MainActivity.this).inflate(R.layout.items, null);
-                    TextView textView1 = (TextView) layout.findViewById(R.id.check_item);
-                    TextView textView2 = (TextView) layout.findViewById(R.id.check_result);
-                    int itemStatus = status.get(position);
-                    boolean pass = itemStatus == 0;
-                    if (position == CHECK_ITEM.length) {
-                        textView1.setText(R.string.root_check);
-                        textView2.setText(ROOT_STATUS[itemStatus + 1]);
-                    } else {
-                        textView1.setText(CHECK_ITEM[position]);
-                        textView2.setText((pass ? getString(R.string.item_no_xposed) : getString(R.string.item_found_xposed)));
-                    }
-                    textView2.setTextColor(pass ? Color.GREEN : Color.RED);
-                    return layout;
-                }
-            });
+					@Override
+					public View getView(int position, View convertView, ViewGroup parent) {
+						RelativeLayout layout = (RelativeLayout) LayoutInflater.from(MainActivity.this).inflate(R.layout.items, null);
+						TextView textView1 = layout.findViewById(R.id.check_item);
+						TextView textView2 = layout.findViewById(R.id.check_result);
+						int itemStatus = status.get(position);
+						boolean pass = itemStatus == 0;
+						if (position == CHECK_ITEM.length) {
+							textView1.setText(R.string.root_check);
+							textView2.setText(ROOT_STATUS[itemStatus + 1]);
+						} else {
+							textView1.setText(CHECK_ITEM[position]);
+							textView2.setText((pass ? getString(R.string.item_no_xposed) : getString(R.string.item_found_xposed)));
+						}
+						textView2.setTextColor(pass ? Color.GREEN : Color.RED);
+						return layout;
+					}
+				});
         }
 
         int checkCode = 0;
@@ -152,7 +153,8 @@ public class MainActivity extends AppCompatActivity {
                 method.setAccessible(true);
                 try {
                     status.add((int) method.invoke(MainActivity.this));
-                } catch (Throwable e) {
+                }
+				catch (Throwable e) {
                     status.add(0);
                 }
             }
@@ -162,24 +164,24 @@ public class MainActivity extends AppCompatActivity {
 
     public void about(View view) {
         new AlertDialog.Builder(this).setTitle("关于")
-                .setMessage(String.format(getString(R.string.about), Process.myPid()))
-                .setPositiveButton("我知道了", null)
-                .show();
+			.setMessage(String.format(getString(R.string.about), Process.myPid()))
+			.setPositiveButton("我知道了", null)
+			.show();
     }
 
     public void donation(View view) {
         new AlertDialog.Builder(this).setTitle("关于捐赠")
-                .setMessage(getString(R.string.donation))
-                .setPositiveButton("支付宝捐赠", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (!AlipayDonate.startAlipayClient(MainActivity.this, "a6x06490c5kpcbnsr84hr23")) {
-                            Toast.makeText(MainActivity.this, "朋友你看起来大概是没有安装支付宝...", Toast.LENGTH_LONG).show();
-                        }
+			.setMessage(getString(R.string.donation))
+			.setPositiveButton("支付宝捐赠", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					if (!AlipayDonate.startAlipayClient(MainActivity.this, "fkx04282fwosw4vwrfnsr82")) {
+						Toast.makeText(MainActivity.this, "朋友你看起来大概是没有安装支付宝...", Toast.LENGTH_LONG).show();
+					}
 
-                    }
-                })
-                .show();
+				}
+			})
+			.show();
     }
 
     @Keep
@@ -191,10 +193,11 @@ public class MainActivity extends AppCompatActivity {
     private boolean testClassLoader() {
         try {
             ClassLoader.getSystemClassLoader()
-                    .loadClass("de.robv.android.xposed.XposedHelpers");
+				.loadClass("de.robv.android.xposed.XposedHelpers");
 
             return true;
-        } catch (ClassNotFoundException e) {
+        }
+		catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         return false;
@@ -204,7 +207,8 @@ public class MainActivity extends AppCompatActivity {
         try {
             XposedBridge.log("fuck wechat");
             return true;
-        } catch (Throwable e) {
+        }
+		catch (Throwable e) {
             e.printStackTrace();
         }
         return false;
@@ -219,7 +223,8 @@ public class MainActivity extends AppCompatActivity {
     private int check3() {
         try {
             throw new Exception();
-        } catch (Exception e) {
+        }
+		catch (Exception e) {
             StackTraceElement[] arrayOfStackTraceElement = e.getStackTrace();
             for (StackTraceElement s : arrayOfStackTraceElement) {
                 if ("de.robv.android.xposed.XposedBridge".equals(s.getClassName())) {
@@ -242,7 +247,8 @@ public class MainActivity extends AppCompatActivity {
                     return 1;
                 }
             }
-        } catch (Throwable ignored) {
+        }
+		catch (Throwable ignored) {
 
         }
         return 0;
@@ -253,7 +259,8 @@ public class MainActivity extends AppCompatActivity {
         try {
             Method method = Throwable.class.getDeclaredMethod("getStackTrace");
             return Modifier.isNative(method.getModifiers()) ? 1 : 0;
-        } catch (NoSuchMethodException e) {
+        }
+		catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
         return 0;
@@ -274,7 +281,7 @@ public class MainActivity extends AppCompatActivity {
             HashSet<String> localObject = new HashSet<>();
             // 读取maps文件信息
             BufferedReader localBufferedReader =
-                    new BufferedReader(new FileReader("/proc/" + Process.myPid() + "/maps"));
+				new BufferedReader(new FileReader("/proc/" + Process.myPid() + "/maps"));
             while (true) {
                 String str = localBufferedReader.readLine();
                 if (str == null) {
@@ -292,7 +299,8 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
             }
-        } catch (Throwable ignored) {
+        }
+		catch (Throwable ignored) {
         }
         return false;
     }
@@ -318,7 +326,8 @@ public class MainActivity extends AppCompatActivity {
     private int check10() {
         try {
             return RootCheckerUtils.detect(this) ? 1 : 0;
-        } catch (Throwable t) {
+        }
+		catch (Throwable t) {
             t.printStackTrace();
             return -1;
         }
@@ -354,7 +363,8 @@ public class MainActivity extends AppCompatActivity {
                     int result = (Integer) setPermissions.invoke(null, file, chmod, uid, gid);
 
                     return result == 0;
-                } catch (Exception e) {
+                }
+				catch (Exception e) {
                     e.printStackTrace();
                 }
 
